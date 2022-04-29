@@ -34,6 +34,7 @@ function Chatroom() {
               color={conversation.color}
               username={conversation.username} 
               messages={conversation.messages}
+              emotes={conversation.emotes}
             />;
           })}
           </ConversationList>

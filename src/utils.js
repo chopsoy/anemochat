@@ -1,5 +1,6 @@
 import Color from 'color'
 import _ from 'underscore'
+import crypto from 'crypto'
 
 function now() {
   return Math.floor((new Date()).getTime() / 1000)
@@ -35,6 +36,10 @@ function restoreArray(Class, fromArray, toArray) {
   _.each(_.map(fromArray, (value) => Class.restore(value)), (instance) => toArray.push(instance))
 }
 
+function getHash(phrase) {
+  return crypto.createHash('md5').update(phrase).digest('hex')
+}
+
 function restoreObject(Class, fromObj, toObj) {
   let keys = _.keys(fromObj)
   let values = _.map(keys, (key) => Class.restore(fromObj[key]))
@@ -42,4 +47,4 @@ function restoreObject(Class, fromObj, toObj) {
     _.zip(keys, values)))
 }
 
-export {now, getGroup, trimLast, reduceColor, restoreArray, restoreObject}
+export {now, getGroup, trimLast, reduceColor, restoreArray, restoreObject, getHash}

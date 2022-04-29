@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'underscore';
 import styled from 'styled-components';
 import Color from 'color';
-import { now } from '../utils'
+import { now, getHash } from '../utils'
 import { MessageStyle } from '../styles/message'
 import { Emote } from './emote'
 import { lookupEmote, isEmote } from '../emotes'
@@ -40,16 +40,16 @@ class Message extends React.Component {
     renderedContent = _.each(renderedContent.split(' '), (word, idx) => {
       if (isEmote(word)) {
         if (currentPhrase.length > 0) {
-          renderedContentList.push(<span>{currentPhrase.join(' ')}</span>)
+          renderedContentList.push(<span key={renderedContentList.length}>{currentPhrase.join(' ')}</span>)
           currentPhrase = []
         }
-        renderedContentList.push(<Emote key={idx} word={word} />)
+        renderedContentList.push(<Emote key={renderedContentList.length} name={word} />)
       } else {
         currentPhrase.push(word)
       }
     })
     if (currentPhrase.length > 0) {
-      renderedContentList.push(<span>{currentPhrase.join(' ')}</span>)
+      renderedContentList.push(<span key={renderedContentList.length}>{currentPhrase.join(' ')}</span>)
     }
 
     return <MessageStyle style={{

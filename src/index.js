@@ -12,9 +12,9 @@ import { Provider } from 'react-redux'
 import { Counter } from './store/counter'
 
 import { useDispatch } from 'react-redux'
-import { newMessage } from './store/chatroom'
+import { newMessage, userEmote } from './store/chatroom'
 
-import { buildEmoteLookupDict, getTwitchEmoteUrl, storeEmote } from './emotes'
+import { buildEmoteLookupDict, getTwitchEmoteUrl, storeEmote, isEmote } from './emotes'
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
@@ -76,7 +76,11 @@ function onMessageHandler(channel, context, message, self) {
     return
   }
   
-  store.dispatch(newMessage({username, group, color, message}))
+  if (isEmote(message)) {
+    store.dispatch(userEmote({username, group, color, message}))
+  } else {
+    store.dispatch(newMessage({username, group, color, message}))
+  }
   // chatroom.addMessage(username, group, color, message)
   // saveState(channel)
   // rerender()

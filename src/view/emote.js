@@ -7,7 +7,7 @@ import { lookupEmote, isEmote } from '../emotes'
 
 class Emote extends React.Component {
   render() {
-    let emoteInfo = lookupEmote(this.props.word)
+    let emoteInfo = lookupEmote(this.props.name)
     return <img
       src={ emoteInfo.url }
       alt={ emoteInfo.name }
